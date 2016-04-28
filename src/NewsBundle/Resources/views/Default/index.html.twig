@@ -1,0 +1,12 @@
+{% extends "NewsBundle::main.html.twig" %}
+
+{% block news %}
+    {% for news in allnews %}
+    <div class="blog-post">
+        <h3>Created object id {{objectid}}</h3>
+            <h2 class="blog-post-title">{{news.title}}</h2>
+            <p class="blog-post-meta">{{news.created|date("d.m.Y l H:i")}} by <a href="#">{{news.Author}}</a></p>
+            <p>{{news.text}}</p>
+            </div><!-- /.blog-post -->
+    {% endfor %}
+ {% endblock %}

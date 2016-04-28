@@ -1,0 +1,19 @@
+{% extends "NewsBundle::main.html.twig" %}
+
+{% block headertitle %}
+    Create a new news 
+{% endblock %}
+
+{% block news %}
+    
+    <center> 
+        <table> 
+            <form action ="{{path('create')}}" method = "POST" > 
+                {{ form_start(form) }} 
+                {{ form_widget(form) }} 
+                {{ form_end(form) }} 
+            </form> 
+        </table> 
+    </center> 
+    
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "AcmeStoreBundle::base.html.twig" %}
+
+{% block title %}
+    Create a new account
+{% endblock %}
+
+{% block body %}
+            <center> 
+                <table> 
+                    <form action ="{{path('register')}}" method = "POST" > 
+                        {{ form_start(form) }} 
+                        {{ form_widget(form) }} 
+                        {{ form_end(form) }} 
+                    </form> 
+                </table> 
+            </center> 
+{% endblock %}

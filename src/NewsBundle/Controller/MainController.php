@@ -32,7 +32,7 @@ class MainController extends Controller {
         ParseClient::initialize('tt11', '', '8888');
         ParseClient::setServerURL('http://localhost:1337/parse');
         $testObject = ParseObject::create("TestObject");
-        $testObject->set("foo", "bar");
+        $testObject->set("foo", "the some created object");
         $testObject->save();
         $articles = $this->get('doctrine')
                 ->getRepository('NewsBundle:News')

@@ -1,0 +1,8 @@
+<form action="{{path('addform')}}" method ="POST">
+      <input name ="objectname" type="text" placeholder="Name" required autofocus/>
+      <input name ="objectprice" type="number" placeholder="Price" required autofocus/>
+    <button type="submit">Add object</button>
+</form>
+     {% if object is defined %}
+         <h3>Object {{object}} is successfully added!</h3>
+     {% endif %}

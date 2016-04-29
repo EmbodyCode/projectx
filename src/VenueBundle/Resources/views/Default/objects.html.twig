@@ -1,0 +1,11 @@
+<title>List all objects</title>
+{% for objects in listobjects %}
+    <table>
+        <tr>
+            <td>{{objects.objectId}}</td>
+        </tr>
+        <tr>
+            <td>{{objects.electro}}</td>
+        </tr>
+    </table>
+{% endfor %}

@@ -8,7 +8,11 @@ security:
             memory: ~
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            http_basic:
+            
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false

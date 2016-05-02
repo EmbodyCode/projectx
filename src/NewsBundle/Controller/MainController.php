@@ -26,7 +26,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class MainController extends Controller {
 
     /**
-     * @Route("/",name ="home")
+     * @Route("/dd",name ="homkke")
      */
     public function indexAction() {
         ParseClient::initialize('tt11', '', '8888');

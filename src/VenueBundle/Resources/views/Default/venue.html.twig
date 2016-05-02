@@ -10,7 +10,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Cover Template for Bootstrap</title>
+<title>Index Page</title>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -36,15 +36,18 @@
 
 <div class="masthead clearfix">
 <div class="inner">
-<h3 class="masthead-brand">Cover</h3>
+<h3 class="masthead-brand">Test projectX</h3>
 <nav>
 <ul class="nav masthead-nav">
-<li class="active"><a href="#">Home</a></li>
+<li class="active"><a href="/">Home</a></li>
 {% if session_id is not defined%} 
     <li><a href="/log">SignIn</a></li> 
 {% endif %}
 <li><a href="#">Features</a></li>
 <li><a href="#">Contact</a></li>
+{% if session_id is defined %}
+    <li><a href="/logout">Logout</a></li>
+{% endif %}
 </ul>
 </nav>
 </div>
@@ -54,7 +57,7 @@
     {% for userinfo in user %}
 <div class="inner cover">
 <h1 class="cover-heading">You logged as {{userinfo.name}} {{userinfo.surname}}</h1>
-<p class="lead">Welcome to your account. You can do something of unavaible functions.</p>
+<p class="lead">Welcome to your account. You cannot do something. Functions are unavailable right now.</p>
 <p class="lead">
 <a href="#" class="btn btn-lg btn-default">Your profile</a>
 </p>
@@ -64,7 +67,7 @@
 
 <div class="mastfoot">
 <div class="inner">
-<p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+<p>ProjectX located here <a href="https://github.com/EmbodyCode/projectx">ProjectX</a>, by <a href="https://vk.com/codegonnabe">@toxic</a>.</p>
 </div>
 </div>
 

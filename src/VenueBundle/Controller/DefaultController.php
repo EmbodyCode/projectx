@@ -74,7 +74,7 @@ class DefaultController extends Controller {
     {
         $session = $this->getRequest()->getSession();
         $session->clear();
-        return $this->render('VenueBundle:Default:signin.html.twig');
+        return $this->redirectToRoute("log");
     }
     
 }

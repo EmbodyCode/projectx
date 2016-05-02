@@ -1,5 +1,9 @@
+<title>Sigin form in Venue</title>
 <form action ="{{path('log')}}" method="post">
-    <input name="login" type="text" placeholder="login" required autofocus>
+    <input name="username" type="text" placeholder="login" required autofocus>
     <input name="password" type="password" placeholder="password" required autofocus>
     <button type="submit">Sign in</button>
 </form>
+    {% if error is defined %}
+        <h3>{{error}}</h3>
+    {% endif %}

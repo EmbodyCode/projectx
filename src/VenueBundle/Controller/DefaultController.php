@@ -8,60 +8,65 @@ use Parse\ParseObject;
 use Parse\ParseQuery;
 use Parse\ParseClient;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use VenueBundle\Modals\Login;
 
 ParseClient::initialize('tt11', '', '8888');
 ParseClient::setServerURL('http://localhost:1337/parse');
 
 class DefaultController extends Controller {
-
-    /**
-     * @Route("/",name="addform")
-     */
-    public function indexAction(Request $request) {
-        if ($request->getMethod() == "POST") {
-            $object = $request->get('objectname');
-            $objectprice = $request->get('objectprice');
-            $objectadd = ParseObject::create("Store");
-            $objectadd->set("electro", $object);
-            $objectadd->set("price", $objectprice);
-            $objectadd->save();
-            return $this->render('VenueBundle:Default:index.html.twig', array('object' => $object));
-        }
-        return $this->render('VenueBundle:Default:index.html.twig');
-    }
-
-    /**
-     * @Route("/objects",name="listobjects")
-     */
-    public function showAction() {
-        $query = new ParseQuery("Store");
-        $results = $query->find();
-        return $this->render('VenueBundle:Default:objects.html.twig', array('listobjects' => $results));
-    }
-
     /**
      * @Route("/log",name="log")
      */
     public function loginAction(Request $request) {
-
-        if ($request->getMethod() == 'POST') {
-            $login = $request->get('login');
+        $session = $this->getRequest()->getSession();
+        if($request->getMethod()=="POST"){
+            $session->clear();
+            $username = $request->get('username');
             $password = $request->get('password');
             $query = new ParseQuery('Accounts');
-            $query_successful_login = $query->equalTo("login", $login);
-            $query_successful_password = $query->equalTo("password", $password);
-            
-            $right_login = $query_successful_login->find();
-            $right_password = $query_successful_password->find();
-            if ($right_login && $right_password) {
-                return $this->render('VenueBundle:Default:venue.html.twig', array(''
-                            . 'user' => $right_login));
+            $successfull_login = $query->equalTo('login', $username);
+            $successfull_password = $query->equalTo('password', $password);
+            $r_login = $successfull_login->find();
+            $r_pass = $successfull_password->find();
+            if($r_login && $r_pass){
+                $login = new Login();
+                $login->setUsername($username);
+                $login->setPassword($password);
+                $session->set('login',$login);
+                return $this->render('VenueBundle:Default:venue.html.twig',
+                        array('user'=>$r_login));
             } else {
-                return $this->render('VenueBundle:Default:error.html.twig', array(''
-                            . 'error' => 'Unsuccessfully login!'));
+                return $this->render('VenueBundle:Default:signin.html.twig',
+                        array('error'=>'Incorrect data!'));
+            }
+        }
+        else {
+            if($session->has('login')){
+                $login = $session->get('login');
+                $username = $login->getUsername();
+                $password = $login->getPassword(); 
+                $query = new ParseQuery('Accounts');
+                $successfull_login = $query->equalTo('login', $username);
+                $successfull_password = $query->equalTo('password', $password);
+                $r_login = $successfull_login->find();
+                $r_pass = $successfull_password->find();
+                if($r_login && $r_pass){
+                    return $this->render('VenueBundle:Default:venue.html.twig',
+                        array('user'=>$r_login));
+                }
             }
         }
         return $this->render('VenueBundle:Default:signin.html.twig');
     }
-
+    
+    /**
+     * @Route("/logout",name="logout")
+     */
+    public function logoutAction()
+    {
+        $session = $this->getRequest()->getSession();
+        $session->clear();
+        return $this->render('VenueBundle:Default:signin.html.twig');
+    }
+    
 }

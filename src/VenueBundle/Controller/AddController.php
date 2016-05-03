@@ -62,8 +62,7 @@ class AddController extends Controller{
                 $venueinfo->set('Contacts',$contacts);
                 $venueinfo->set('ExternalResources',$external_resources);
                 $venueinfo->save();
-                return $this->render('VenueBundle:Default:create.html.twig',array(''
-                    . 'message'=>"Successfully added!"));
+                return $this->redirectToRoute('home');
             }
         }
         else{

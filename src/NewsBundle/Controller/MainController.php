@@ -31,14 +31,14 @@ class MainController extends Controller {
     public function indexAction() {
         ParseClient::initialize('tt11', '', '8888');
         ParseClient::setServerURL('http://localhost:1337/parse');
-        $testObject = ParseObject::create("TestObject");
+        $testObject = new ParseObject("GameScore");
         $testObject->set("foo", "the some created object");
         $testObject->save();
         $articles = $this->get('doctrine')
                 ->getRepository('NewsBundle:News')
                 ->findBy(array(), array('id' => 'DESC'));
         return $this->render('NewsBundle:Default:index.html.twig', array(
-                    'allnews' => $articles,'objectid'=>$objectId));
+                    'allnews' => $articles));
     }
 
     /**
@@ -94,6 +94,24 @@ class MainController extends Controller {
         }
         return $this->render('NewsBundle::main.signin.html.twig');
 
+    }
+    
+    /**
+     * @Route("/pp",name="pp")
+     */
+    public function aaaAction(Request $request)
+    {
+        ParseClient::initialize('tt11', '', '8888');
+        ParseClient::setServerURL('http://localhost:1337/parse');
+        $paob = new ParseObject("GameScore");
+        if($request->getMethod()=="POST")
+        {
+            $playername = $request->get('playername');
+            $paob->set('playerName',$playername);
+            $paob->save();
+            return $this->render('NewsBundle:Default:player.html.twig');
+        }
+            return $this->render('NewsBundle:Default:player.html.twig');
     }
 
 }

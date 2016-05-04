@@ -17,5 +17,14 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     
+alogin:
+    pattern: /alogin
+    defaults: {_controller: VenueBundle:Admin:adminLog }
+
+login_check:
+    pattern: /login_check
+
+logout:
+    pattern: /logout
 
     

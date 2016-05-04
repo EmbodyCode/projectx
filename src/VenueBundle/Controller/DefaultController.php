@@ -5,6 +5,7 @@ namespace VenueBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Parse\ParseQuery;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Parse\ParseClient;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use VenueBundle\Modals\Login;
@@ -16,10 +17,12 @@ class DefaultController extends Controller {
 
     /**
      * @Route("/",name="home")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction() {
         $session = $this->getRequest()->getSession();
-        if ($session->has('login')) {
+        return $this->render('VenueBundle:Default:venue.html.twig');
+       /* if ($session->has('login')) {
             $login = $session->get('login');
             $username = $login->getUsername();
             $password = $login->getPassword();
@@ -34,7 +37,7 @@ class DefaultController extends Controller {
             }
         } else {
             return $this->render('VenueBundle:Default:denied.html.twig');
-        } return $this->render('VenueBundle:Default:venue.html.twig');
+        } return $this->render('VenueBundle:Default:venue.html.twig');*/
     }
 
     /**
@@ -69,9 +72,9 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/logout",name="logout")
+     * @Route("/logoff",name="logoff")
      */
-    public function logoutAction() {
+    public function logAction() {
         $session = $this->getRequest()->getSession();
         $session->clear();
         return $this->redirectToRoute("log");

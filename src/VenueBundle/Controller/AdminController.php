@@ -2,13 +2,11 @@
 namespace VenueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Parse\ParseQuery;
-use Parse\ParseClient;
+use VenueBundle\Document\Venue;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-ParseClient::initialize('tt11', '', '8888');
-ParseClient::setServerURL('http://localhost:1337/parse');
 
 class AdminController extends Controller{
     /**
@@ -31,11 +29,28 @@ class AdminController extends Controller{
     }
     
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="reg_platform")
      */
-    public function adminAction()
+    public function adminAction(Request $request)
     {
-        return new Response('<html><body>Admin page</body></html>');
+        $venueInfo = new Venue();
+        if($request->getMethod()=="POST")
+        {
+            $venueUser = $request->get('venueUser');
+            $venuePassword = $request->get('venuePassword');
+            $venueRole = $request->get('venueRole');
+ 
+            $venueInfo->setVenueUser($venueUser);
+            $venueInfo->setVenuePassword($venuePassword);
+            $venueInfo->setRole($venueRole);
+            $venueCreatedAt = $venueInfo->setCreatedAt(new \DateTime('now'));
+            $venueUpdatedAt = $venueInfo->setUpdatedAt(new \DateTime('now'));
+            
+            $dm = $this->get('doctrine_mongodb')->getManager();
+            $dm->persist($venueInfo);
+            $dm->flush();
+        }
+        return $this->render('VenueBundle:Admin:registerPlatform.html.twig');
     }
 }
 

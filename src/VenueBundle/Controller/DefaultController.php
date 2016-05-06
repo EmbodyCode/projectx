@@ -3,15 +3,10 @@
 namespace VenueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use VenueBundle\Document\Venue;
 use Symfony\Component\HttpFoundation\Request;
-use Parse\ParseQuery;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Parse\ParseClient;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use VenueBundle\Modals\Login;
-
-ParseClient::initialize('tt11', '', '8888');
-ParseClient::setServerURL('http://localhost:1337/parse');
 
 class DefaultController extends Controller {
 
@@ -20,65 +15,64 @@ class DefaultController extends Controller {
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction() {
-        $session = $this->getRequest()->getSession();
-        return $this->render('VenueBundle:Default:venue.html.twig');
-       /* if ($session->has('login')) {
-            $login = $session->get('login');
-            $username = $login->getUsername();
-            $password = $login->getPassword();
-            $query = new ParseQuery('Accounts');
-            $successfull_login = $query->equalTo('login', $username);
-            $successfull_password = $query->equalTo('password', $password);
-            $r_login = $successfull_login->find();
-            $r_pass = $successfull_password->find();
-            if ($r_login && $r_pass) {
-                $userdata = $session->get('login');
-                return $this->render('VenueBundle:Default:venue.html.twig', array('user' => $r_login, 'session_id' => $session->getId()));
-            }
-        } else {
-            return $this->render('VenueBundle:Default:denied.html.twig');
-        } return $this->render('VenueBundle:Default:venue.html.twig');*/
-    }
-
-    /**
-     * @Route("/log",name="log")
-     */
-    public function loginAction(Request $request) {
-        $session = $this->getRequest()->getSession();
-        if ($request->getMethod() == "POST") {
-            $session->clear();
-            $username = $request->get('username');
-            $password = $request->get('password');
-            $query = new ParseQuery('Accounts');
-            $successfull_login = $query->equalTo('login', $username);
-            $successfull_password = $query->equalTo('password', $password);
-            $r_login = $successfull_login->find();
-            $r_pass = $successfull_password->find();
-            if ($r_login && $r_pass) {
-                $login = new Login();
-                $login->setUsername($username);
-                $login->setPassword($password);
-                $session->set('login', $login);
-                return $this->redirectToRoute("home");
-            } else {
-                return $this->render('VenueBundle:Default:signin.html.twig', array('error' => 'Incorrect data!'));
-            }
-        } else {
-            if ($session->has('login')) {
-                return $this->redirectToRoute("home");
-            }
-        }
-        return $this->render('VenueBundle:Default:signin.html.twig');
-    }
-
-    /**
-     * @Route("/logoff",name="logoff")
-     */
-    public function logAction() {
-        $session = $this->getRequest()->getSession();
-        $session->clear();
-        return $this->redirectToRoute("log");
+        $venueinfo = new Venue();
+        return $this->render('VenueBundle:Default:venue.html.twig',array(''
+            . 'venueinfo' => $venueinfo->getFullTitle()));
     }
     
+    /**
+     * @Route(name="add")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function addAction(Request $request)
+    {
+        $venueinfo = new Venue();
+            if($request->getMethod()=="POST")
+            {
+                $short_title = $request->get('short_title');
+                $full_title = $request->get('full_title');
+                $local_title = $request->get('local_title');
+                $short_desc = $request->get('short_desc');
+                $full_desc = $request->get('full_desc');
+                $local_desc = $request->get('local_desc');
+                $country = $request->get('country');
+                $city = $request->get('city');
+                $address = $request->get('adress');
+                $postcode = $request->get('postcode');
+                $latitude = $request->get('latitude');
+                $longtitude = $request->get('longtitude');
+                $main_type = $request->get('maintype');
+                $additional_type = $request->get('additional_type');
+                $capacity = $request->get('capacity');
+                $max_capacity = $request->get('max_capacity');
+                $contacts = $request->get('contacts');
+                $external_resources = $request->get('external_resources');
+                
+                $venueinfo->setCreatedAt(new \DateTime('now'));
+                $venueinfo->setUpdatedAt(new \DateTime('now'));
+                $venueinfo->setShortTitle($short_title);
+                $venueinfo->setFullTitle($full_title);
+                $venueinfo->setLocalTitle($local_title);
+                $venueinfo->setShortDesc($short_desc);
+                $venueinfo->setFullDesc($full_desc);
+                $venueinfo->setLocalDesc($local_desc);
+                $venueinfo->setCountry($country);
+                $venueinfo->setCity($city);
+                $venueinfo->setAdress($address);
+                $venueinfo->setPostcode($postcode);
+                $venueinfo->setLatitude($latitude);
+                $venueinfo->setLongtitude($longtitude);
+                $venueinfo->setMainType($main_type);
+                $venueinfo->setAdditionalType($additional_type);
+                $venueinfo->setCapacity($capacity);
+                $venueinfo->setMaxCapacity($max_capacity);
+                $venueinfo->setContacts($contacts);
+                $venueinfo->setExternalResources($external_resources);
+                $dm = $this->get('doctrine_mongodb')->getManager();
+                $dm->persist($venueinfo);
+                $dm->flush();
+            }
+          return $this->render('VenueBundle:Default:venue.html.twig');
+    }
 
 }

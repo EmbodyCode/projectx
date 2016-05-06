@@ -1,0 +1,14 @@
+<html>
+    <title>Register a new platform</title>
+        <form action="{{path('reg_platform')}}" method="POST">
+            <input name="venueUser" type="text" required autofocus>
+            <input name="venuePassword" type="password" required autofocus>
+            <br>
+            <h2>Reg as: </h2>
+            <input name="venueRole" type="text">
+            <br>
+            <br>
+            <input name="objectId" type="hidden">
+            <button type="submit">Send</button>
+        </form>
+</html>

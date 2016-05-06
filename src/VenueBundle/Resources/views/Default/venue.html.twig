@@ -9,8 +9,8 @@
   <body>
     <header>
       <a href="http://ontourcloud.com"><img src="images/logo_bottom.svg"></a>
-      <div class="title">Ontourcloud.Venue – Minsk Arena</div> <!-- Вместо Минск-Арены - динамическое название -->
-    </header>
+      <div class="title">Ontourcloud.Venue – {{venueinfo}}</div> <!-- Вместо Минск-Арены - динамическое название -->
+      </header>
     <div id="map"></div>
     <script>
       function initMap() {
@@ -23,6 +23,7 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8Sz7i19L1YPqtJ6_ArT2amfqwsFYdfSQ&signed_in=true&callback=initMap" async defer></script>
     <div id="container">
+        <form action="{{path('add')}}" method="POST">
       <ul>
         <li><a href="#">Dashboard</a></li>
         <li><a href="#" class="li-selected">Basic information</a></li>
@@ -34,31 +35,32 @@
       </ul>
       <div id="content">
         <div id="left-content">
-          <p style="padding-top: 0;">Short Title:</p><input type="text">
-          <p>Full Title:</p><input type="text">
-          <p>Local Title:</p><input type="text">
-          <p>Short Description:</p><input type="text">
-          <p>Full Description:</p><textarea></textarea>
-          <p>Local Description:</p><textarea></textarea>
-          <p>Capacity:</p><input>
-          <p>Max Capacity:</p><input>
+          <p style="padding-top: 0;">Short Title:</p><input type="text" name="short_title" required autofocus>
+          <p>Full Title:</p><input type="text" name="full_title" required autofocus/>
+          <p>Local Title:</p><input type="text" name="local_title" required autofocus/>
+          <p>Short Description:</p><input type="text" name="short_desc" required autofocus/>
+          <p>Full Description:</p><textarea name="full_desc" required autofocus></textarea>
+          <p>Local Description:</p><textarea name="local_desc" required autofocus></textarea>
+          <p>Capacity:</p><input name="capacity" required autofocus/>
+          <p>Max Capacity:</p><input name="max_capacity" required autofocus />
         </div>
         <div id="right-content">
-          <p style="padding-top: 0;">Country:</p><input>
-          <p>City:</p><input>
-          <p>Address:</p><input>
-          <p>Post Code:</p>  <input>
+          <p style="padding-top: 0;">Country:</p><input name="country" required autofocus/>
+          <p>City:</p><input name="city" required autofocus/>
+          <p>Address:</p><input name="adress" required autofocus/>
+          <p>Post Code:</p>  <input name="postcode" required autofocus/>
           <p>Latitude / Longitude:</p>
-          <input style="width: calc(100% / 2 - 22.5px); float: left">
-          <input style="width: calc(100% / 2 - 22.5px);">
-          <p>Contacts:</p><input>
-          <p>Main Type:</p><input>
-          <p>Additional Type:</p><input>
-          <p>External Resources:</p><input>
-          <p>Ticket Services:</p><input>
+          <input name="latitude" required autofocus style="width: calc(100% / 2 - 22.5px); float: left"/>
+          <input name="longtitude" required autofocus style="width: calc(100% / 2 - 22.5px);"/>
+          <p>Contacts:</p><input name="contacts" required autofocus/>
+          <p>Main Type:</p><input name="maintype" required autofocus/>
+          <p>Additional Type:</p><input name="additional_type" required autofocus/>
+          <p>External Resources:</p><input name="external_resources" required autofocus/>
+          <p>Ticket Services:</p><input name="ticket_services">
         </div>
       </div>
-      <button>SAVE</button>
+      <button type="submit">SAVE</button>
+        </form>
     </div>
     <footer>© 2016 Touring App, LLC</footer>
   </body>

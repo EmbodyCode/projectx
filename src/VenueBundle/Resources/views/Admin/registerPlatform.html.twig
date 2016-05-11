@@ -1,13 +1,30 @@
 <html>
     <title>Register a new platform</title>
         <form action="{{path('reg_platform')}}" method="POST">
-            <input name="venueUser" type="text" required autofocus>
-            <input name="venuePassword" type="password" required autofocus>
+            <input name="venueUser" type= value="">
+            <input name="venuePassword" type="password" value="">
             <br>
             <h2>Reg as: </h2>
-            <input name="venueRole" type="text">
-            <br>
-            <br>
+            <input name="venueRole" type="text"/>
+            <input type="hidden" name="short_title" value=""/>
+            <input type="hidden" name="full_title" value=""/>
+            <input type="hidden" name="local_title" value=""/>
+            <input type="hidden" name="short_desc" value=""/>
+            <input type="hidden" name="full_desc" value="">
+            <input name="local_desc" type="hidden" value=""/>
+            <input name="capacity" type="hidden" value=""/>
+            <input name="max_capacity" type="hidden" value="" />
+            <input name="country" type="hidden" value=""/>
+            <input name="city" type="hidden" value=""/>
+            <input name="adress" type="hidden" value=""/>
+            <input name="postcode" type="hidden" value=""/>
+            <input name="latitude" type="hidden" value=""/>
+            <input name="longtitude" type="hidden" value="" 
+            <input name="contacts" type="hidden" value=""/>
+            <input name="maintype" type="hidden" value=""/>
+            <input name="additional_type" type="hidden" value=""/>
+            <input name="external_resources" type="hidden" value=""/>
+            <input name="ticket_services" type="hidden">
             <input name="objectId" type="hidden">
             <button type="submit">Send</button>
         </form>

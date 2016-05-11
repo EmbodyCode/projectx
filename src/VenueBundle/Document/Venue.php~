@@ -672,4 +672,26 @@ class Venue  {
     {
         return $this->ido;
     }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return self
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string $role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
 }

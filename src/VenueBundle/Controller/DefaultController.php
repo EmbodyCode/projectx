@@ -3,7 +3,6 @@
 namespace VenueBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use VenueBundle\Document\Venue;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,18 +14,42 @@ class DefaultController extends Controller {
      * @Security("has_role('ROLE_USER')")
      */
     public function indexAction() {
-        $venueinfo = new Venue();
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
+        $user = $this->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         return $this->render('VenueBundle:Default:venue.html.twig',array(''
-            . 'venueinfo' => $venueinfo->getFullTitle()));
+            . 'ShortTitle' => $user->getShortTitle(),''
+            . 'LocalTitle' => $user->getLocalTitle(),''
+            . 'FullTitle' => $user->getFullTitle(),''
+            . 'ShortDesc' => $user->getShortDesc(),''
+            . 'FullDesc' => $user->getFullDesc(),''
+            . 'LocalDesc' => $user->getLocalDesc(),''
+            . 'Country' => $user->getCountry(),''
+            . 'City' => $user->getCity(),''
+            . 'Adress' => $user->getAdress(),''
+            . 'MainType' =>$user->getMainType(),''
+            . 'AdditionalType' => $user->getAdditionalType(),''
+            . 'ExternalResources' => $user->getExternalResources(),''
+            . 'PostCode' => $user->getPostcode(),''
+            . 'Capacity' => $user->getCapacity(),''
+            . 'MaxCapacity' => $user->getMaxCapacity(),''
+            . 'Latitude' => $user->getLatitude(),''
+            . 'Longtitude' => $user->getLongtitude(),''
+            . 'Contacts' => $user->getContacts()));
     }
     
     /**
-     * @Route(name="add")
+     * @Route("/update", name="updateInfo")
      * @Security("has_role('ROLE_USER')")
      */
     public function addAction(Request $request)
     {
-        $venueinfo = new Venue();
+        $user = $this->getUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
             if($request->getMethod()=="POST")
             {
                 $short_title = $request->get('short_title');
@@ -48,31 +71,30 @@ class DefaultController extends Controller {
                 $contacts = $request->get('contacts');
                 $external_resources = $request->get('external_resources');
                 
-                $venueinfo->setCreatedAt(new \DateTime('now'));
-                $venueinfo->setUpdatedAt(new \DateTime('now'));
-                $venueinfo->setShortTitle($short_title);
-                $venueinfo->setFullTitle($full_title);
-                $venueinfo->setLocalTitle($local_title);
-                $venueinfo->setShortDesc($short_desc);
-                $venueinfo->setFullDesc($full_desc);
-                $venueinfo->setLocalDesc($local_desc);
-                $venueinfo->setCountry($country);
-                $venueinfo->setCity($city);
-                $venueinfo->setAdress($address);
-                $venueinfo->setPostcode($postcode);
-                $venueinfo->setLatitude($latitude);
-                $venueinfo->setLongtitude($longtitude);
-                $venueinfo->setMainType($main_type);
-                $venueinfo->setAdditionalType($additional_type);
-                $venueinfo->setCapacity($capacity);
-                $venueinfo->setMaxCapacity($max_capacity);
-                $venueinfo->setContacts($contacts);
-                $venueinfo->setExternalResources($external_resources);
+  
+                $user->setShortTitle($short_title);
+                $user->setFullTitle($full_title);
+                $user->setLocalTitle($local_title);
+                $user->setShortDesc($short_desc);
+                $user->setFullDesc($full_desc);
+                $user->setLocalDesc($local_desc);
+                $user->setCountry($country);
+                $user->setCity($city);
+                $user->setAdress($address);
+                $user->setPostcode($postcode);
+                $user->setLatitude($latitude);
+                $user->setLongtitude($longtitude);
+                $user->setMainType($main_type);
+                $user->setAdditionalType($additional_type);
+                $user->setCapacity($capacity);
+                $user->setMaxCapacity($max_capacity);
+                $user->setContacts($contacts);
+                $user->setExternalResources($external_resources);
                 $dm = $this->get('doctrine_mongodb')->getManager();
-                $dm->persist($venueinfo);
+                $dm->persist($user);
                 $dm->flush();
             }
-          return $this->render('VenueBundle:Default:venue.html.twig');
+          return $this->redirectToRoute('home');
     }
 
 }

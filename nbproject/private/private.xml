@@ -5,10 +5,9 @@
         <group>
             <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Controller/DefaultController.php</file>
             <file>file:/opt/lampp/htdocs/blog/app/config/security.yml</file>
-            <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Resources/views/Admin/admin_authorization.html.twig</file>
-            <file>file:/opt/lampp/htdocs/blog/app/config/config.yml</file>
             <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Controller/AdminController.php</file>
-            <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Resources/views/Default/venue.html.twig</file>
+            <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Resources/views/Test/test.html.twig</file>
+            <file>file:/opt/lampp/htdocs/blog/src/VenueBundle/Document/Platforms.php</file>
         </group>
     </open-files>
 </project-private>

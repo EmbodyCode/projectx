@@ -40,6 +40,122 @@ class Platforms implements UserInterface, \Serializable {
      */
     private $isActive;
     
+    /**
+     *@MongoDB\Field(name="ShortTitle", type="string")
+     */
+    private $shortTitle;
+    
+    /**
+     *@MongoDB\Field(name="updatedAt", type="date")
+     */
+    private $updatedAt;
+    
+    /**
+     *@MongoDB\Field(name="createdAt", type="date")
+     */
+    private $createdAt;
+
+
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="LocalTitle")
+     */
+    private $localTitle;
+    
+    /**
+     *@MongoDB\Field(name="FullTitle", type="string")
+     */
+    private $fullTitle;
+    
+    /**
+     *@MongoDB\Field(name="ShortDescription", type="string")
+     */
+    private $shortDesc;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="FullDescription")
+     */
+    private $fullDesc;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="LocalDescription")
+     */
+    private $localDesc;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Country")
+     */
+    private $country;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="City")
+     */
+    private $city;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Adress")
+     */
+    private $adress;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="MainType")
+     */
+    private $mainType;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="AdditionalType")
+     */
+    private $additionalType;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Contacts")
+     */
+    private $contacts;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="ExternalResources")
+     */
+    private $externalResources;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Postcode")
+     */
+    private $postcode;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Capacity")
+     */
+    private $capacity;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="MaxCapacity")
+     */
+    private $maxCapacity;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Latitude")
+     */
+    private $latitude;
+    
+    /**
+     *@MongoDB\String
+     *@MongoDB\Field(name="Longtitude")
+     */
+    private $longtitude;
+    
     public function __construct()
     {
         $this->isActive = true;
@@ -109,6 +225,7 @@ class Platforms implements UserInterface, \Serializable {
     {
         return $this->id;
     }
+    
 
     /**
      * Set username
@@ -167,6 +284,11 @@ class Platforms implements UserInterface, \Serializable {
     {
         return $this->email;
     }
+    
+    public function getShortTitle()
+    {
+        return $this->shortTitle;
+    }
 
     /**
      * Set isActive
@@ -189,4 +311,18 @@ class Platforms implements UserInterface, \Serializable {
     {
         return $this->isActive;
     }
+
+    /**
+     * Set roles
+     *
+     * @param string $roles
+     * @return self
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+        return $this;
+    }
+
+   
 }

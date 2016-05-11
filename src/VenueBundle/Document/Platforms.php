@@ -156,13 +156,6 @@ class Platforms implements UserInterface, \Serializable {
      */
     private $longtitude;
     
-    public function __construct()
-    {
-        $this->isActive = true;
-        $this->roles = array();
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
-    }
     
     public function getUsername()
     {
@@ -246,8 +239,7 @@ class Platforms implements UserInterface, \Serializable {
      */
     public function setRole($role)
     {
-        $role = strtoupper($role);
-        $roles = $this->getRoles();
+        $this->roles = $role;
         return $this;
     }
     

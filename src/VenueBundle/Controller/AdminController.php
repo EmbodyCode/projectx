@@ -4,7 +4,6 @@ namespace VenueBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use VenueBundle\Document\Platforms;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 
@@ -33,13 +32,16 @@ class AdminController extends Controller{
      */
     public function adminAction(Request $request)
     {
-        $venueInfo = new Platforms();
         if($request->getMethod()=="POST")
         {
-            $venueUser = $request->get('venueUser');
-            $venuePassword = $request->get('venuePassword');
-            $venueRole = $request->get('venueRole');
-                 $short_title = $request->get('short_title');
+                $venueInfo = new \VenueBundle\Document\Platforms();
+                $venueUser = $request->get('venueUser');
+                $venuePassword = $request->get('venuePassword');
+                $venueRole = $request->get('venueRole');
+                $createdAt = new \DateTime('now');
+                $updatedAt = new \DateTime('now');
+                
+                $short_title = $request->get('short_title');
                 $full_title = $request->get('full_title');
                 $local_title = $request->get('local_title');
                 $short_desc = $request->get('short_desc');
@@ -57,7 +59,10 @@ class AdminController extends Controller{
                 $max_capacity = $request->get('max_capacity');
                 $contacts = $request->get('contacts');
                 $external_resources = $request->get('external_resources');
-                
+               
+                $venueInfo->setUsername($venueUser);
+                $venueInfo->setPassword($venuePassword);
+                $venueInfo->setRole($venueRole);
                 $venueInfo->setShortTitle($short_title);
                 $venueInfo->setFullTitle($full_title);
                 $venueInfo->setLocalTitle($local_title);
@@ -76,18 +81,35 @@ class AdminController extends Controller{
                 $venueInfo->setMaxCapacity($max_capacity);
                 $venueInfo->setContacts($contacts);
                 $venueInfo->setExternalResources($external_resources);
- 
-            $venueInfo->setUsername($venueUser);
-            $venueInfo->setPassword($venuePassword);
-            $venueInfo->setRole($venueRole);
-            $venueCreatedAt = $venueInfo->setCreatedAt(new \DateTime('now'));
-            $venueUpdatedAt = $venueInfo->setUpdatedAt(new \DateTime('now'));
-            
-            $dm = $this->get('doctrine_mongodb')->getManager();
-            $dm->persist($venueInfo);
-            $dm->flush();
+                $venueInfo->setCreatedAt($createdAt);
+                $venueInfo->setUpdatedAt($updatedAt);
+                
+                $dm = $this->get('doctrine_mongodb')->getManager();
+                $dm->persist($venueInfo);
+                $dm->flush();
         }
         return $this->render('VenueBundle:Admin:registerPlatform.html.twig');
     }
+    
+    /**
+     * @Route("/testCont", name="testcont")
+     */
+     public function testcontAction(Request $request)
+     {
+         if($request->getMethod()=="POST")
+         {
+             $test = new Test();
+             $country = $request->get('country');
+             $city = $request->get('city'); 
+             $count = $request->get('count');
+             $test->setCity($city);
+             $test->setCountry($country);
+             $test->setCount($count);
+             $dm = $this->get('doctrine_mongodb')->getManager();
+             $dm->persist($test);
+             $dm->flush(); 
+         }
+         return $this->render('VenueBundle:Admin:test.html.twig');
+     }
 }
 

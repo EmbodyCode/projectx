@@ -2,16 +2,15 @@
 namespace VenueBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @MongoDB\Document(collection="Venue")
  */
 
-class Platforms implements UserInterface, \Serializable {
+class Register {
     
     /**
-     *@MongoDB\Id
+     *@MongoDB\Id(strategy="AUTO")
      */
     private $id;
     
@@ -36,11 +35,6 @@ class Platforms implements UserInterface, \Serializable {
     private $roles;
     
     /**
-     *@MongoDB\Field(name="is_active", type="boolean")
-     */
-    private $isActive;
-    
-    /**
      *@MongoDB\Field(name="ShortTitle", type="string")
      */
     private $shortTitle;
@@ -58,7 +52,7 @@ class Platforms implements UserInterface, \Serializable {
 
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="LocalTitle")
+     *@MongoDB\Field(name="LocalTitle", type="string")
      */
     private $localTitle;
     
@@ -74,85 +68,85 @@ class Platforms implements UserInterface, \Serializable {
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="FullDescription")
+     *@MongoDB\Field(name="FullDescription", type="string")
      */
     private $fullDesc;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="LocalDescription")
+     *@MongoDB\Field(name="LocalDescription", type="string")
      */
     private $localDesc;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Country")
+     *@MongoDB\Field(name="Country", type="string")
      */
     private $country;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="City")
+     *@MongoDB\Field(name="City", type="string")
      */
     private $city;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Adress")
+     *@MongoDB\Field(name="Adress", type="string")
      */
     private $adress;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="MainType")
+     *@MongoDB\Field(name="MainType", type="string")
      */
     private $mainType;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="AdditionalType")
+     *@MongoDB\Field(name="AdditionalType", type="string")
      */
     private $additionalType;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Contacts")
+     *@MongoDB\Field(name="Contacts", type="string")
      */
     private $contacts;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="ExternalResources")
+     *@MongoDB\Field(name="ExternalResources", type="string")
      */
     private $externalResources;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Postcode")
+     *@MongoDB\Field(name="Postcode", type="string")
      */
     private $postcode;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Capacity")
+     *@MongoDB\Field(name="Capacity", type="string")
      */
     private $capacity;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="MaxCapacity")
+     *@MongoDB\Field(name="MaxCapacity", type="string")
      */
     private $maxCapacity;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Latitude")
+     *@MongoDB\Field(name="Latitude", type="string")
      */
     private $latitude;
     
     /**
      *@MongoDB\String
-     *@MongoDB\Field(name="Longtitude")
+     *@MongoDB\Field(name="Longtitude", type="string")
      */
     private $longtitude;
     
@@ -192,30 +186,6 @@ class Platforms implements UserInterface, \Serializable {
     {
     }
     
-    /** @see \Serializable::serialize() */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ));
-    }
-    
-    /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt
-        ) = unserialize($serialized);
-    }
-
     /**
      * Get id
      *
@@ -260,6 +230,12 @@ class Platforms implements UserInterface, \Serializable {
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
+    }
+    
+    public function setId($id)
+    {
+        $this->id = $id;
         return $this;
     }
 
